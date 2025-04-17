@@ -1,4 +1,5 @@
 import FetchAllCustomers from "@/api-functions/fetchAllCustomers";
+import CustomerCard from "@/components/CustomerCard";
 import Header from "@/components/Header";
 import { Customer } from "@/constants/Types";
 import React, { useEffect, useState } from "react";
@@ -55,13 +56,12 @@ export default function Main() {
         data={filteredData}
         keyExtractor={(item) => String(item.id)}
         renderItem={({ item }) => (
-          <View style={styles.Card}>
-            <Text style={styles.Name}>{item.name}</Text>
-            <Text>{item.phone}</Text>
-            <Text>
-              {item.city} / {item.district}
-            </Text>
-          </View>
+          <CustomerCard
+            name={item.name}
+            phone={String(item.phone)}
+            city={item.city}
+            district={item.district}
+          />
         )}
       />
     </View>
@@ -99,17 +99,5 @@ const styles = StyleSheet.create({
     height: 40,
     fontSize: 12,
     paddingVertical: 11,
-  },
-  Card: {
-    padding: 15,
-    marginBottom: 8,
-    backgroundColor: "#f9f9f9",
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: "#ddd",
-  },
-  Name: {
-    fontWeight: "bold",
-    fontSize: 16,
   },
 });
