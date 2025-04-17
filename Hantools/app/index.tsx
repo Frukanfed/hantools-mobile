@@ -39,11 +39,7 @@ export default function IndexPage() {
         style={styles.Logo}
         source={require("../assets/images/mainlogo.png")}
       />
-      <ImageBackground
-        source={""}
-        style={styles.Container}
-        imageStyle={styles.BackgroundImage}
-      >
+      <View style={styles.Container}>
         {loading ? (
           // Show loading spinner while waiting for fake fetch
           <ActivityIndicator size="large" color="#297be8" />
@@ -71,7 +67,7 @@ export default function IndexPage() {
             </Pressable>
           </>
         )}
-      </ImageBackground>
+      </View>
     </View>
   );
 }
@@ -80,23 +76,19 @@ const styles = StyleSheet.create({
   Container: {
     width: "100%",
     height: "100%",
-    flexDirection: "column",
+    flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-  },
-  BackgroundImage: {
-    width: "100%",
-    height: "90%",
   },
   Logo: {
     width: 110,
     height: 50,
     resizeMode: "contain",
     marginLeft: 10,
+    marginTop: 30,
   },
   Button: {
-    marginTop: 50,
-    marginBottom: 40,
+    paddingHorizontal: 20,
   },
   Text: {
     width: 100,
