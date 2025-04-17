@@ -1,5 +1,7 @@
+import FetchAllCustomers from "@/api-functions/fetchAllCustomers";
 import Header from "@/components/Header";
-import React, { useState } from "react";
+import { Customer } from "@/constants/Types";
+import React, { useEffect, useState } from "react";
 import {
   View,
   TextInput,
@@ -9,44 +11,23 @@ import {
   Pressable,
 } from "react-native";
 
-const data = [
-  {
-    id: "1",
-    name: "Jane Doe",
-    phone: "1111111111",
-    city: "Istanbul",
-    district: "Beşiktaş",
-  },
-  {
-    id: "2",
-    name: "Arthur Morgan",
-    phone: "0000112233",
-    city: "Blackwater",
-    district: "Santa Fe",
-  },
-  {
-    id: "3",
-    name: "Muster1",
-    phone: "22222222",
-    city: "Istanbul",
-    district: "Beşiktaş",
-  },
-  {
-    id: "4",
-    name: "Müşteri",
-    phone: "222",
-    city: "BAŞAKŞEHİR",
-    district: "BAŞAKŞEHİR",
-  },
-];
-
 export default function Main() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [customers, setCustomers] = useState<Customer[]>([]);
 
-  const filteredData = data.filter(
+  useEffect(() => {
+    getCustomers();
+  }, []);
+
+  const getCustomers = () => {
+    const fetchedCustomers = FetchAllCustomers();
+    setCustomers(fetchedCustomers);
+  };
+
+  const filteredData = customers.filter(
     (item) =>
       item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.phone.includes(searchQuery) ||
+      String(item.phone).includes(searchQuery) ||
       item.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.district.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -72,7 +53,7 @@ export default function Main() {
       </View>
       <FlatList
         data={filteredData}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => String(item.id)}
         renderItem={({ item }) => (
           <View style={styles.Card}>
             <Text style={styles.Name}>{item.name}</Text>
