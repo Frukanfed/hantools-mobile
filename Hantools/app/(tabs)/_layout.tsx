@@ -3,13 +3,15 @@ import React from "react";
 import { Platform } from "react-native";
 
 import { HapticTab } from "@/components/HapticTab";
-import { IconSymbol } from "@/components/ui/IconSymbol";
 import TabBarBackground from "@/components/ui/TabBarBackground";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
+import { FontAwesome } from "@expo/vector-icons";
+import { useSelector } from "react-redux";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const isAdmin = useSelector((state: any) => state.admin.isAdmin);
 
   return (
     <Tabs
@@ -28,20 +30,49 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="main"
+        name="orders"
         options={{
-          title: "Home",
+          href: !isAdmin ? null : "/(tabs)/orders",
+          title: "Siparişler",
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="house.fill" color={color} />
+            <FontAwesome size={27} name="id-card" color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="items"
         options={{
-          title: "Explore",
+          title: "Ürünler",
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="paperplane.fill" color={color} />
+            <FontAwesome size={27} name="archive" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="main"
+        options={{
+          title: "Müşteriler",
+          tabBarIcon: ({ color }) => (
+            <FontAwesome size={27} name="book" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="dealers"
+        options={{
+          title: "Satıcılar",
+          tabBarIcon: ({ color }) => (
+            <FontAwesome size={27} name="user" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="reports"
+        options={{
+          href: !isAdmin ? null : "/(tabs)/reports",
+          title: "Rapor",
+          tabBarIcon: ({ color }) => (
+            <FontAwesome size={27} name="bar-chart" color={color} />
           ),
         }}
       />
