@@ -1,6 +1,13 @@
 import Header from "@/components/Header";
 import React, { useState } from "react";
-import { View, TextInput, FlatList, Text, StyleSheet } from "react-native";
+import {
+  View,
+  TextInput,
+  FlatList,
+  Text,
+  StyleSheet,
+  Pressable,
+} from "react-native";
 
 const data = [
   {
@@ -39,18 +46,30 @@ export default function Main() {
   const filteredData = data.filter(
     (item) =>
       item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.phone.includes(searchQuery)
+      item.phone.includes(searchQuery) ||
+      item.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.district.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
     <View style={styles.Container}>
       <Header />
-      <TextInput
-        style={styles.SearchBar}
-        placeholder="Search for a customer..."
-        value={searchQuery}
-        onChangeText={(text) => setSearchQuery(text)}
-      />
+      <View style={styles.SearchAndAddContainer}>
+        <TextInput
+          style={styles.SearchBar}
+          placeholder="Bir müşteri arayın..."
+          placeholderTextColor={"black"}
+          value={searchQuery}
+          onChangeText={(text) => setSearchQuery(text)}
+        />
+        <Pressable style={styles.NewCustomerButton}>
+          {({ pressed }) => (
+            <Text style={[styles.Text, { opacity: pressed ? 0.5 : 1 }]}>
+              Müşteri Ekle
+            </Text>
+          )}
+        </Pressable>
+      </View>
       <FlatList
         data={filteredData}
         keyExtractor={(item) => item.id}
@@ -74,13 +93,31 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: "white",
   },
+  SearchAndAddContainer: {
+    flexDirection: "row",
+    width: "100%",
+    justifyContent: "space-between",
+    paddingTop: 30,
+  },
   SearchBar: {
     height: 40,
+    width: "70%",
     borderColor: "gray",
     borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 8,
     marginBottom: 16,
+  },
+  NewCustomerButton: {},
+  Text: {
+    backgroundColor: "#297be8",
+    color: "white",
+    borderRadius: 5,
+    textAlign: "center",
+    width: 80,
+    height: 40,
+    fontSize: 12,
+    paddingVertical: 11,
   },
   Card: {
     padding: 15,
