@@ -10,6 +10,12 @@ export default function FetchAllOrders() {
       products: "Urun2",
       cost: 76.0,
       status: "Beklemede",
+      address: "123 Elm Street, Springfield",
+      taxNumber: 1234567890,
+      taxOffice: "Springfield Tax Office",
+      billingAddress: "456 Oak Avenue, Springfield",
+      city: "Springfield",
+      district: "Downtown",
     },
     {
       id: 2,
@@ -19,6 +25,12 @@ export default function FetchAllOrders() {
       products: "RETOOLS ELEKTRİKLİ 3’LÜ SET (2.28)",
       cost: 76.0,
       status: "Beklemede",
+      address: "789 Maple Road, Metrocity",
+      taxNumber: 9876543210,
+      taxOffice: "Metrocity Tax Bureau",
+      billingAddress: "101 Pine Boulevard, Metrocity",
+      city: "Metrocity",
+      district: "Central",
     },
     {
       id: 3,
@@ -28,6 +40,12 @@ export default function FetchAllOrders() {
       products: "Urun123",
       cost: 0.0,
       status: "Beklemede",
+      address: "456 Birch Lane, Downtown",
+      taxNumber: 5678901234,
+      taxOffice: "Downtown Tax Office",
+      billingAddress: "789 Cedar Parkway, Downtown",
+      city: "Downtown",
+      district: "East",
     },
     {
       id: 4,
@@ -37,6 +55,12 @@ export default function FetchAllOrders() {
       products: "-",
       cost: 0.0,
       status: "Beklemede",
+      address: "12 Pine Street, Uptown",
+      taxNumber: 2345678901,
+      taxOffice: "Uptown Tax Bureau",
+      billingAddress: "234 Elm Drive, Uptown",
+      city: "Uptown",
+      district: "North",
     },
     {
       id: 5,
@@ -46,6 +70,12 @@ export default function FetchAllOrders() {
       products: "-",
       cost: 0.0,
       status: "Beklemede",
+      address: "65 Willow Road, Suburbia",
+      taxNumber: 3456789012,
+      taxOffice: "Suburbia Tax Agency",
+      billingAddress: "88 Maple Street, Suburbia",
+      city: "Suburbia",
+      district: "South",
     },
   ];
 
@@ -57,6 +87,12 @@ export default function FetchAllOrders() {
     products: item.products,
     cost: item.cost,
     status: item.status,
+    city: item.city,
+    district: item.district,
+    address: item.address,
+    taxNumber: item.taxNumber,
+    taxOffice: item.taxOffice,
+    billingAddress: item.billingAddress,
   }));
 
   return orders;

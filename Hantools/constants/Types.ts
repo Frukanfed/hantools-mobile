@@ -28,4 +28,10 @@ export type Order = {
     products: string,
     cost: number,
     status: string,
+    city?: string,
+    district?: string,
+    address?: string,
+    taxNumber?: number,
+    taxOffice?: string,
+    billingAddress?: string
 }

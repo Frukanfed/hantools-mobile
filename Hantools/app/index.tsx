@@ -7,7 +7,6 @@ import {
   StyleSheet,
   Text,
   ActivityIndicator,
-  ImageBackground,
   Image,
 } from "react-native";
 //import actions

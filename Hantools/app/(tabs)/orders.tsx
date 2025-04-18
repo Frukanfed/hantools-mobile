@@ -1,6 +1,7 @@
 import FetchAllOrders from "@/api-functions/fetchAllOrders";
 import Header from "@/components/Header";
 import OrderCard from "@/components/OrderCard";
+import OrderModal from "@/components/OrderModal";
 import { ModalType, Order } from "@/constants/Types";
 import { useFocusEffect } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
@@ -13,8 +14,10 @@ import {
   Pressable,
   Alert,
 } from "react-native";
+import { useSelector } from "react-redux";
 
 export default function Orders() {
+  const isAdmin = useSelector((state: any) => state.admin.isAdmin);
   const [searchQuery, setSearchQuery] = useState("");
   const [orders, setOrders] = useState<Order[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
@@ -72,28 +75,30 @@ export default function Orders() {
 
   return (
     <View style={styles.Container}>
-      {/* <DealerModal
+      <OrderModal
         visible={modalVisible}
         onClose={() => setModalVisible(false)}
         type={modalType}
-        dealer={selectedDealer}
-      /> */}
+        order={selectedOrder}
+      />
       <Header />
       <View style={styles.SearchAndAddContainer}>
         <TextInput
-          style={styles.SearchBar}
+          style={[{ width: isAdmin ? "90%" : "70%" }, styles.SearchBar]}
           placeholder="Bir sipariş arayın..."
           placeholderTextColor={"black"}
           value={searchQuery}
           onChangeText={(text) => setSearchQuery(text)}
         />
-        <Pressable onPress={() => handleModalOpen("add")}>
-          {({ pressed }) => (
-            <Text style={[styles.Text, { opacity: pressed ? 0.5 : 1 }]}>
-              Sipariş Ekle
-            </Text>
-          )}
-        </Pressable>
+        {!isAdmin && (
+          <Pressable onPress={() => handleModalOpen("add")}>
+            {({ pressed }) => (
+              <Text style={[styles.Text, { opacity: pressed ? 0.5 : 1 }]}>
+                Sipariş Ekle
+              </Text>
+            )}
+          </Pressable>
+        )}
       </View>
       <FlatList
         data={filteredData}
@@ -107,7 +112,6 @@ export default function Orders() {
             cost={item.cost}
             status={item.status}
             onPressSee={() => handleModalOpen("see", item)}
-            onPressEdit={() => handleModalOpen("edit", item)}
             onPressDelete={() => handleDeleteDealer(item.id)}
           />
         )}
@@ -130,7 +134,6 @@ const styles = StyleSheet.create({
   },
   SearchBar: {
     height: 40,
-    width: "70%",
     borderColor: "gray",
     borderWidth: 1,
     borderRadius: 8,

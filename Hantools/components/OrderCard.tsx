@@ -9,7 +9,6 @@ interface Props {
   cost: number;
   status: string;
   onPressSee: () => void;
-  onPressEdit: () => void;
   onPressDelete: () => void;
 }
 
@@ -21,7 +20,6 @@ export default function OrderCard({
   cost,
   status,
   onPressSee,
-  onPressEdit,
   onPressDelete,
 }: Props) {
   return (
@@ -46,16 +44,7 @@ export default function OrderCard({
             />
           )}
         </Pressable>
-        <Pressable onPress={onPressEdit}>
-          {({ pressed }) => (
-            <FontAwesome
-              size={22}
-              name={"pencil"}
-              style={{ marginHorizontal: 15, opacity: pressed ? 0.5 : 1 }}
-            />
-          )}
-        </Pressable>
-        <Pressable onPress={onPressDelete}>
+        <Pressable onPress={onPressDelete} style={{ marginLeft: 15 }}>
           {({ pressed }) => (
             <FontAwesome
               size={22}
