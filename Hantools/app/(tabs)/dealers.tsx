@@ -3,6 +3,7 @@ import DealerCard from "@/components/DealerCard";
 import DealerModal from "@/components/DealerModal";
 import Header from "@/components/Header";
 import { Dealer, ModalType } from "@/constants/Types";
+import { useFocusEffect } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import {
   View,
@@ -24,10 +25,16 @@ export default function Dealers() {
   );
 
   useEffect(() => {
-    getDealer();
+    getDealers();
   }, []);
 
-  const getDealer = () => {
+  useFocusEffect(
+    React.useCallback(() => {
+      getDealers();
+    }, [])
+  );
+
+  const getDealers = () => {
     const fetchedDealers = FetchAllDealers();
     setDealers(fetchedDealers);
   };

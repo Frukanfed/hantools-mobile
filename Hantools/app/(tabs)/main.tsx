@@ -3,6 +3,7 @@ import CustomerCard from "@/components/CustomerCard";
 import CustomerModal from "@/components/CustomerModal";
 import Header from "@/components/Header";
 import { Customer, ModalType } from "@/constants/Types";
+import { useFocusEffect } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import {
   View,
@@ -26,6 +27,12 @@ export default function Main() {
   useEffect(() => {
     getCustomers();
   }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      getCustomers();
+    }, [])
+  );
 
   const getCustomers = () => {
     const fetchedCustomers = FetchAllCustomers();

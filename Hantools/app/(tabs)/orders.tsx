@@ -1,9 +1,8 @@
 import FetchAllOrders from "@/api-functions/fetchAllOrders";
-import DealerCard from "@/components/DealerCard";
-import DealerModal from "@/components/DealerModal";
 import Header from "@/components/Header";
 import OrderCard from "@/components/OrderCard";
-import { Dealer, ModalType, Order } from "@/constants/Types";
+import { ModalType, Order } from "@/constants/Types";
+import { useFocusEffect } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import {
   View,
@@ -25,10 +24,16 @@ export default function Orders() {
   );
 
   useEffect(() => {
-    getDealer();
+    getOrders();
   }, []);
 
-  const getDealer = () => {
+  useFocusEffect(
+    React.useCallback(() => {
+      getOrders();
+    }, [])
+  );
+
+  const getOrders = () => {
     const fetchedOrders = FetchAllOrders();
     setOrders(fetchedOrders);
   };

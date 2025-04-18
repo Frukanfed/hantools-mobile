@@ -4,7 +4,7 @@ export default function FetchAllOrders() {
   const data = [
     {
       id: 1,
-      date: "17/04/2025",
+      date: "01/04/2025",
       seller: "Leon Kennedy",
       paymentMethod: "Han",
       products: "Urun2",
@@ -13,7 +13,7 @@ export default function FetchAllOrders() {
     },
     {
       id: 2,
-      date: "17/04/2025",
+      date: "17/06/2025",
       seller: "Leon Kennedy",
       paymentMethod: "Nejat",
       products: "RETOOLS ELEKTRİKLİ 3’LÜ SET (2.28)",
@@ -22,8 +22,8 @@ export default function FetchAllOrders() {
     },
     {
       id: 3,
-      date: "17/04/2025",
-      seller: "Leon Kennedy",
+      date: "17/04/2020",
+      seller: "Mehmet Ali",
       paymentMethod: "Nejat",
       products: "Urun123",
       cost: 0.0,
