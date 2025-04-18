@@ -1,4 +1,5 @@
 import { FontAwesome } from "@expo/vector-icons";
+import { router } from "expo-router";
 import { View, Image, Pressable, StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
 
@@ -13,7 +14,11 @@ export default function Header() {
       />
       {isAdmin && (
         // TODO: ROUTER
-        <Pressable onPress={() => {}}>
+        <Pressable
+          onPress={() => {
+            router.navigate("/adminPanel");
+          }}
+        >
           {({ pressed }) => (
             <FontAwesome
               size={25}

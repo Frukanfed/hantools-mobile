@@ -47,3 +47,13 @@ export type Item = {
     tl_price: number,
     payment_types: string[]
 }
+
+export type Report = {
+    id: number,
+    dealer: string,
+    action: string,
+    product: string,
+    amount: number
+    customer: string,
+    date: string
+}
