@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     fontSize: 11,
     paddingLeft: 5,
+    textAlignVertical: "top",
   },
   Button: {
     marginTop: 18,
