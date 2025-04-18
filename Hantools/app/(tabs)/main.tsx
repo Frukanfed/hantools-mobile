@@ -57,10 +57,7 @@ export default function Main() {
           value={searchQuery}
           onChangeText={(text) => setSearchQuery(text)}
         />
-        <Pressable
-          style={styles.NewCustomerButton}
-          onPress={() => handleModalOpen("add")}
-        >
+        <Pressable onPress={() => handleModalOpen("add")}>
           {({ pressed }) => (
             <Text style={[styles.Text, { opacity: pressed ? 0.5 : 1 }]}>
               Müşteri Ekle
@@ -105,7 +102,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     marginBottom: 16,
   },
-  NewCustomerButton: {},
   Text: {
     backgroundColor: "#297be8",
     color: "white",
