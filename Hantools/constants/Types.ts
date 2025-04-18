@@ -35,3 +35,15 @@ export type Order = {
     taxOffice?: string,
     billingAddress?: string
 }
+
+export type Item = {
+    id: number,
+    code: string,
+    name: string,
+    stock: boolean,
+    buying_price: number,
+    consignment: number,
+    selling_price: number,
+    tl_price: number,
+    payment_types: string[]
+}
