@@ -1,7 +1,7 @@
 import FetchAllItems from "@/api-functions/fetchAllItems";
-import CustomerCard from "@/components/CustomerCard";
-import CustomerModal from "@/components/CustomerModal";
 import Header from "@/components/Header";
+import ItemCard from "@/components/ItemCard";
+import ItemModal from "@/components/ItemModal";
 import { Item, ModalType } from "@/constants/Types";
 import { useFocusEffect } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
@@ -13,15 +13,15 @@ import {
   StyleSheet,
   Pressable,
 } from "react-native";
+import { useSelector } from "react-redux";
 
 export default function Items() {
+  const isAdmin = useSelector((state: any) => state.admin.isAdmin);
   const [searchQuery, setSearchQuery] = useState("");
   const [items, setItems] = useState<Item[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalType, setModalType] = useState<ModalType>("see");
-  const [selectedCustomer, setSelectedCustomer] = useState<Item | undefined>(
-    undefined
-  );
+  const [selectedItem, setSelectedItem] = useState<Item | undefined>(undefined);
 
   useEffect(() => {
     getItems();
@@ -54,49 +54,46 @@ export default function Items() {
 
   const handleModalOpen = (type: ModalType, item?: Item) => {
     setModalType(type);
-    setSelectedCustomer(item);
+    setSelectedItem(item);
     setModalVisible(true);
   };
 
   return (
     <View style={styles.Container}>
-      {/* <CustomerModal
+      <ItemModal
         visible={modalVisible}
         onClose={() => setModalVisible(false)}
         type={modalType}
-        customer={selectedCustomer}
-      /> */}
+        item={selectedItem}
+      />
       <Header />
       <View style={styles.SearchAndAddContainer}>
         <TextInput
-          style={styles.SearchBar}
+          style={[{ width: isAdmin ? "70%" : "100%" }, styles.SearchBar]}
           placeholder="Bir ürün arayın..."
           placeholderTextColor={"black"}
           value={searchQuery}
           onChangeText={(text) => setSearchQuery(text)}
         />
-        <Pressable onPress={() => handleModalOpen("add")}>
-          {({ pressed }) => (
-            <Text style={[styles.Text, { opacity: pressed ? 0.5 : 1 }]}>
-              Ürün Ekle
-            </Text>
-          )}
-        </Pressable>
+        {isAdmin && (
+          <Pressable onPress={() => handleModalOpen("add")}>
+            {({ pressed }) => (
+              <Text style={[styles.Text, { opacity: pressed ? 0.5 : 1 }]}>
+                Ürün Ekle
+              </Text>
+            )}
+          </Pressable>
+        )}
       </View>
       <FlatList
         data={filteredData}
         keyExtractor={(item) => String(item.id)}
         renderItem={({ item }) => (
-          <Text>a</Text>
-          // <CustomerCard
-          //   name={item.name}
-          //   phone={String(item.phone)}
-          //   city={item.city}
-          //   district={item.district}
-          //   onPressSee={() => handleModalOpen("see", item)}
-          //   onPressEdit={() => handleModalOpen("edit", item)}
-          //   onPressDelete={() => {}}
-          // />
+          <ItemCard
+            item={item}
+            onPressSee={() => handleModalOpen("see", item)}
+            onPressEdit={() => handleModalOpen("edit", item)}
+          />
         )}
       />
     </View>
@@ -117,7 +114,6 @@ const styles = StyleSheet.create({
   },
   SearchBar: {
     height: 40,
-    width: "70%",
     borderColor: "gray",
     borderWidth: 1,
     borderRadius: 8,
