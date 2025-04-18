@@ -18,6 +18,9 @@ export default function Main() {
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalType, setModalType] = useState<ModalType>("see");
+  const [selectedCustomer, setSelectedCustomer] = useState<
+    Customer | undefined
+  >(undefined);
 
   useEffect(() => {
     getCustomers();
@@ -36,8 +39,9 @@ export default function Main() {
       item.district.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const handleModalOpen = (type: ModalType) => {
+  const handleModalOpen = (type: ModalType, customer?: Customer) => {
     setModalType(type);
+    setSelectedCustomer(customer);
     setModalVisible(true);
   };
 
@@ -47,6 +51,7 @@ export default function Main() {
         visible={modalVisible}
         onClose={() => setModalVisible(false)}
         type={modalType}
+        customer={selectedCustomer}
       />
       <Header />
       <View style={styles.SearchAndAddContainer}>
@@ -74,8 +79,8 @@ export default function Main() {
             phone={String(item.phone)}
             city={item.city}
             district={item.district}
-            onPressSee={() => handleModalOpen("see")}
-            onPressEdit={() => handleModalOpen("edit")}
+            onPressSee={() => handleModalOpen("see", item)}
+            onPressEdit={() => handleModalOpen("edit", item)}
             onPressDelete={() => {}}
           />
         )}

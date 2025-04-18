@@ -1,5 +1,5 @@
 import { Customer, ModalType } from "@/constants/Types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Modal,
   View,
@@ -13,9 +13,15 @@ interface Props {
   visible: boolean;
   onClose: () => void;
   type: ModalType;
+  customer?: Customer;
 }
 
-export default function CustomerModal({ visible, onClose, type }: Props) {
+export default function CustomerModal({
+  visible,
+  onClose,
+  type,
+  customer,
+}: Props) {
   const [formValues, setFormValues] = useState<Customer>({
     id: 0,
     name: "",
@@ -27,6 +33,24 @@ export default function CustomerModal({ visible, onClose, type }: Props) {
     taxOffice: "",
     billingAddress: "",
   });
+
+  useEffect(() => {
+    if (type !== "add" && customer) {
+      setFormValues(customer);
+    } else {
+      setFormValues({
+        id: 0,
+        name: "",
+        phone: 0,
+        city: "",
+        district: "",
+        address: "",
+        taxNumber: 0,
+        taxOffice: "",
+        billingAddress: "",
+      });
+    }
+  }, [visible, customer, type]);
 
   const header =
     type == "add"
@@ -62,48 +86,59 @@ export default function CustomerModal({ visible, onClose, type }: Props) {
             </View>
             <Text style={styles.SubheaderText}>Müşteri Bilgileri</Text>
             <TextInput
-              style={styles.TextInput}
+              style={[{ opacity: type != "add" ? 1 : 0.5 }, styles.TextInput]}
               placeholder="Ad Soyad"
               placeholderTextColor={"black"}
               value={formValues.name}
               onChangeText={(value) => handleInputChange("name", value)}
+              editable={type !== "see"}
             />
             <TextInput
-              style={styles.TextInput}
+              style={[{ opacity: type != "add" ? 1 : 0.5 }, styles.TextInput]}
               placeholder="Telefon"
               placeholderTextColor={"black"}
               value={formValues.phone == 0 ? "" : String(formValues.phone)}
               onChangeText={(value) => handleInputChange("phone", value)}
               keyboardType="numeric"
               maxLength={10}
+              editable={type !== "see"}
             />
             <Text style={styles.SubheaderText}>Adres Bilgileri</Text>
             <View style={styles.CityDistrictContainer}>
               <TextInput
-                style={styles.CityDistrictTextInput}
+                style={[
+                  { opacity: type != "add" ? 1 : 0.5 },
+                  styles.CityDistrictTextInput,
+                ]}
                 placeholder="İl"
                 placeholderTextColor={"black"}
                 value={formValues.city}
                 onChangeText={(value) => handleInputChange("city", value)}
+                editable={type !== "see"}
               />
               <TextInput
-                style={styles.CityDistrictTextInput}
+                style={[
+                  { opacity: type != "add" ? 1 : 0.5 },
+                  styles.CityDistrictTextInput,
+                ]}
                 placeholder="İlçe"
                 placeholderTextColor={"black"}
                 value={formValues.district}
                 onChangeText={(value) => handleInputChange("district", value)}
+                editable={type !== "see"}
               />
             </View>
             <TextInput
-              style={styles.TextInput}
+              style={[{ opacity: type != "add" ? 1 : 0.5 }, styles.TextInput]}
               placeholder="Adres"
               placeholderTextColor={"black"}
               value={formValues.address}
               onChangeText={(value) => handleInputChange("address", value)}
+              editable={type !== "see"}
             />
             <Text style={styles.SubheaderText}>Fatura Adresi Bilgileri</Text>
             <TextInput
-              style={styles.TextInput}
+              style={[{ opacity: type != "add" ? 1 : 0.5 }, styles.TextInput]}
               placeholder="Vergi Numarasi"
               placeholderTextColor={"black"}
               value={
@@ -111,22 +146,25 @@ export default function CustomerModal({ visible, onClose, type }: Props) {
               }
               onChangeText={(value) => handleInputChange("taxNumber", value)}
               keyboardType="numeric"
+              editable={type !== "see"}
             />
             <TextInput
-              style={styles.TextInput}
+              style={[{ opacity: type != "add" ? 1 : 0.5 }, styles.TextInput]}
               placeholder="Vergi Dairesi"
               placeholderTextColor={"black"}
               value={formValues.taxOffice}
               onChangeText={(value) => handleInputChange("taxOffice", value)}
+              editable={type !== "see"}
             />
             <TextInput
-              style={styles.TextInput}
+              style={[{ opacity: type != "add" ? 1 : 0.5 }, styles.TextInput]}
               placeholder="Fatura Adresi"
               placeholderTextColor={"black"}
               value={formValues.billingAddress}
               onChangeText={(value) =>
                 handleInputChange("billingAddress", value)
               }
+              editable={type !== "see"}
             />
             {type != "see" && (
               <Pressable onPress={() => handleForm()} style={styles.Button}>
@@ -184,7 +222,6 @@ const styles = StyleSheet.create({
     width: "90%",
     marginLeft: 10,
     marginTop: 10,
-    opacity: 0.5,
     borderWidth: 1,
     borderRadius: 5,
     fontSize: 11,
@@ -198,7 +235,6 @@ const styles = StyleSheet.create({
     width: "43.5%",
     marginLeft: 10,
     marginTop: 10,
-    opacity: 0.5,
     borderWidth: 1,
     borderRadius: 5,
     fontSize: 11,
