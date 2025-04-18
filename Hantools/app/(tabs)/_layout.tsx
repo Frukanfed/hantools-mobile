@@ -30,12 +30,12 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="orders"
+        name="dealers"
         options={{
-          href: !isAdmin ? null : "/(tabs)/orders",
-          title: "Siparişler",
+          href: !isAdmin ? null : "/(tabs)/dealers",
+          title: "Satıcılar",
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={27} name="id-card" color={color} />
+            <FontAwesome size={27} name="user" color={color} />
           ),
         }}
       />
@@ -58,11 +58,11 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="dealers"
+        name="orders"
         options={{
-          title: "Satıcılar",
+          title: "Siparişler",
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={27} name="user" color={color} />
+            <FontAwesome size={27} name="id-card" color={color} />
           ),
         }}
       />

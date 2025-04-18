@@ -19,3 +19,13 @@ export type Dealer = {
     username: string,
     phone: number
 }
+
+export type Order = {
+    id: number,
+    date: string,
+    seller: string,
+    payment_method: string,
+    products: string,
+    cost: number,
+    status: string,
+}
