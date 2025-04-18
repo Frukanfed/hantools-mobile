@@ -11,6 +11,7 @@ import {
   Text,
   StyleSheet,
   Pressable,
+  Alert,
 } from "react-native";
 
 export default function Main() {
@@ -43,6 +44,24 @@ export default function Main() {
     setModalType(type);
     setSelectedCustomer(customer);
     setModalVisible(true);
+  };
+
+  const handleDeleteCustomer = (id: number) => {
+    Alert.alert(
+      "Müşteri Sil",
+      "Bu müşteriyi silmek istediğinize emin misiniz?",
+      [
+        { text: "İptal", style: "cancel" },
+        {
+          text: "Sil",
+          style: "destructive",
+          onPress: () =>
+            setCustomers((prev) =>
+              prev.filter((customer) => customer.id !== id)
+            ),
+        },
+      ]
+    );
   };
 
   return (
@@ -81,7 +100,7 @@ export default function Main() {
             district={item.district}
             onPressSee={() => handleModalOpen("see", item)}
             onPressEdit={() => handleModalOpen("edit", item)}
-            onPressDelete={() => {}}
+            onPressDelete={() => handleDeleteCustomer(item.id)}
           />
         )}
       />
