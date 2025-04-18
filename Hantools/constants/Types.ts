@@ -5,3 +5,5 @@ export type Customer = {
     city: string,
     district: string,
 }
+
+export type ModalType = 'see' | 'add' | 'edit';

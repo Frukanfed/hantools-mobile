@@ -1,7 +1,8 @@
 import FetchAllCustomers from "@/api-functions/fetchAllCustomers";
 import CustomerCard from "@/components/CustomerCard";
+import CustomerModal from "@/components/CustomerModal";
 import Header from "@/components/Header";
-import { Customer } from "@/constants/Types";
+import { Customer, ModalType } from "@/constants/Types";
 import React, { useEffect, useState } from "react";
 import {
   View,
@@ -15,6 +16,8 @@ import {
 export default function Main() {
   const [searchQuery, setSearchQuery] = useState("");
   const [customers, setCustomers] = useState<Customer[]>([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalType, setModalType] = useState<ModalType>("see");
 
   useEffect(() => {
     getCustomers();
@@ -33,8 +36,18 @@ export default function Main() {
       item.district.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const handleModalOpen = (type: ModalType) => {
+    setModalType(type);
+    setModalVisible(true);
+  };
+
   return (
     <View style={styles.Container}>
+      <CustomerModal
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        type={modalType}
+      />
       <Header />
       <View style={styles.SearchAndAddContainer}>
         <TextInput
@@ -44,7 +57,10 @@ export default function Main() {
           value={searchQuery}
           onChangeText={(text) => setSearchQuery(text)}
         />
-        <Pressable style={styles.NewCustomerButton}>
+        <Pressable
+          style={styles.NewCustomerButton}
+          onPress={() => handleModalOpen("add")}
+        >
           {({ pressed }) => (
             <Text style={[styles.Text, { opacity: pressed ? 0.5 : 1 }]}>
               Müşteri Ekle
