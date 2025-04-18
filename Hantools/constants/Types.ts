@@ -57,3 +57,18 @@ export type Report = {
     customer: string,
     date: string
 }
+
+export type Admin = {
+    id: number,
+    first_name: string,
+    last_name: string,
+    username: string,
+}
+
+export type StorageWorker = {
+    id: number,
+    first_name: string,
+    last_name: string,
+    username: string,
+    clearance: string
+}

@@ -8,10 +8,29 @@ export default function Header() {
 
   return (
     <View style={styles.Container}>
-      <Image
-        style={styles.Logo}
-        source={require("../assets/images/mainlogo.png")}
-      />
+      <View style={{ flexDirection: "row" }}>
+        <Pressable
+          onPress={() => {
+            router.navigate("/");
+          }}
+        >
+          {({ pressed }) => (
+            <FontAwesome
+              size={20}
+              name="chevron-left"
+              style={[
+                styles.AdminPanelButton,
+                { opacity: pressed ? 0.5 : 1, paddingRight: 10 },
+              ]}
+              color={"gray"}
+            />
+          )}
+        </Pressable>
+        <Image
+          style={styles.Logo}
+          source={require("../assets/images/mainlogo.png")}
+        />
+      </View>
       {isAdmin && (
         // TODO: ROUTER
         <Pressable
