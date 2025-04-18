@@ -11,3 +11,11 @@ export type Customer = {
 }
 
 export type ModalType = 'see' | 'add' | 'edit';
+
+export type Dealer = {
+    id: number,
+    first_name: string,
+    last_name: string,
+    username: string,
+    phone: number
+}

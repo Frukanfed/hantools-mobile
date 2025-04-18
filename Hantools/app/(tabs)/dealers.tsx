@@ -1,129 +1,135 @@
-import { StyleSheet, Image, Platform } from "react-native";
-
-import { Collapsible } from "@/components/Collapsible";
-import { ExternalLink } from "@/components/ExternalLink";
-import ParallaxScrollView from "@/components/ParallaxScrollView";
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
-import { IconSymbol } from "@/components/ui/IconSymbol";
+import FetchAllDealers from "@/api-functions/fetchAllDealers";
+import DealerCard from "@/components/DealerCard";
+import DealerModal from "@/components/DealerModal";
+import Header from "@/components/Header";
+import { Dealer, ModalType } from "@/constants/Types";
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  TextInput,
+  FlatList,
+  Text,
+  StyleSheet,
+  Pressable,
+  Alert,
+} from "react-native";
 
 export default function Dealers() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [dealers, setDealers] = useState<Dealer[]>([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalType, setModalType] = useState<ModalType>("see");
+  const [selectedDealer, setselectedDealer] = useState<Dealer | undefined>(
+    undefined
+  );
+
+  useEffect(() => {
+    getDealer();
+  }, []);
+
+  const getDealer = () => {
+    const fetchedDealers = FetchAllDealers();
+    setDealers(fetchedDealers);
+  };
+
+  const filteredData = dealers.filter(
+    (item) =>
+      item.first_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.last_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      String(item.phone).includes(searchQuery)
+  );
+
+  const handleModalOpen = (type: ModalType, dealer?: Dealer) => {
+    setModalType(type);
+    setselectedDealer(dealer);
+    setModalVisible(true);
+  };
+
+  const handleDeleteDealer = (id: number) => {
+    Alert.alert("Satıcı Sil", "Bu satıcıyı silmek istediğinize emin misiniz?", [
+      { text: "İptal", style: "cancel" },
+      {
+        text: "Sil",
+        style: "destructive",
+        onPress: () =>
+          setDealers((prev) => prev.filter((dealer) => dealer.id !== id)),
+      },
+    ]);
+  };
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
-      headerImage={
-        <IconSymbol
-          size={310}
-          color="#808080"
-          name="chevron.left.forwardslash.chevron.right"
-          style={styles.headerImage}
+    <View style={styles.Container}>
+      <DealerModal
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        type={modalType}
+        dealer={selectedDealer}
+      />
+      <Header />
+      <View style={styles.SearchAndAddContainer}>
+        <TextInput
+          style={styles.SearchBar}
+          placeholder="Bir satıcı arayın..."
+          placeholderTextColor={"black"}
+          value={searchQuery}
+          onChangeText={(text) => setSearchQuery(text)}
         />
-      }
-    >
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Explore</ThemedText>
-      </ThemedView>
-      <ThemedText>
-        This app includes example code to help you get started.
-      </ThemedText>
-      <Collapsible title="File-based routing">
-        <ThemedText>
-          This app has two screens:{" "}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText>{" "}
-          and{" "}
-          <ThemedText type="defaultSemiBold">app/(tabs)/explore.tsx</ThemedText>
-        </ThemedText>
-        <ThemedText>
-          The layout file in{" "}
-          <ThemedText type="defaultSemiBold">app/(tabs)/_layout.tsx</ThemedText>{" "}
-          sets up the tab navigator.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/router/introduction">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Android, iOS, and web support">
-        <ThemedText>
-          You can open this project on Android, iOS, and the web. To open the
-          web version, press <ThemedText type="defaultSemiBold">w</ThemedText>{" "}
-          in the terminal running this project.
-        </ThemedText>
-      </Collapsible>
-      <Collapsible title="Images">
-        <ThemedText>
-          For static images, you can use the{" "}
-          <ThemedText type="defaultSemiBold">@2x</ThemedText> and{" "}
-          <ThemedText type="defaultSemiBold">@3x</ThemedText> suffixes to
-          provide files for different screen densities
-        </ThemedText>
-        <Image
-          source={require("@/assets/images/react-logo.png")}
-          style={{ alignSelf: "center" }}
-        />
-        <ExternalLink href="https://reactnative.dev/docs/images">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Custom fonts">
-        <ThemedText>
-          Open <ThemedText type="defaultSemiBold">app/_layout.tsx</ThemedText>{" "}
-          to see how to load{" "}
-          <ThemedText style={{ fontFamily: "SpaceMono" }}>
-            custom fonts such as this one.
-          </ThemedText>
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/versions/latest/sdk/font">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Light and dark mode components">
-        <ThemedText>
-          This template has light and dark mode support. The{" "}
-          <ThemedText type="defaultSemiBold">useColorScheme()</ThemedText> hook
-          lets you inspect what the user's current color scheme is, and so you
-          can adjust UI colors accordingly.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/develop/user-interface/color-themes/">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Animations">
-        <ThemedText>
-          This template includes an example of an animated component. The{" "}
-          <ThemedText type="defaultSemiBold">
-            components/HelloWave.tsx
-          </ThemedText>{" "}
-          component uses the powerful{" "}
-          <ThemedText type="defaultSemiBold">
-            react-native-reanimated
-          </ThemedText>{" "}
-          library to create a waving hand animation.
-        </ThemedText>
-        {Platform.select({
-          ios: (
-            <ThemedText>
-              The{" "}
-              <ThemedText type="defaultSemiBold">
-                components/ParallaxScrollView.tsx
-              </ThemedText>{" "}
-              component provides a parallax effect for the header image.
-            </ThemedText>
-          ),
-        })}
-      </Collapsible>
-    </ParallaxScrollView>
+        <Pressable onPress={() => handleModalOpen("add")}>
+          {({ pressed }) => (
+            <Text style={[styles.Text, { opacity: pressed ? 0.5 : 1 }]}>
+              Satıcı Ekle
+            </Text>
+          )}
+        </Pressable>
+      </View>
+      <FlatList
+        data={filteredData}
+        keyExtractor={(item) => String(item.id)}
+        renderItem={({ item }) => (
+          <DealerCard
+            first_name={item.first_name}
+            last_name={item.last_name}
+            username={item.username}
+            phone={String(item.phone)}
+            onPressEdit={() => handleModalOpen("edit", item)}
+            onPressDelete={() => handleDeleteDealer(item.id)}
+          />
+        )}
+      />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  headerImage: {
-    color: "#808080",
-    bottom: -90,
-    left: -35,
-    position: "absolute",
+  Container: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: "white",
   },
-  titleContainer: {
+  SearchAndAddContainer: {
     flexDirection: "row",
-    gap: 8,
+    width: "100%",
+    justifyContent: "space-between",
+    paddingTop: 30,
+  },
+  SearchBar: {
+    height: 40,
+    width: "70%",
+    borderColor: "gray",
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 8,
+    marginBottom: 16,
+  },
+  Text: {
+    backgroundColor: "#297be8",
+    color: "white",
+    borderRadius: 5,
+    textAlign: "center",
+    width: 80,
+    height: 40,
+    fontSize: 12,
+    paddingVertical: 11,
   },
 });
