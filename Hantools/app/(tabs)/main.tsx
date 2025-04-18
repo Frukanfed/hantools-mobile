@@ -74,6 +74,9 @@ export default function Main() {
             phone={String(item.phone)}
             city={item.city}
             district={item.district}
+            onPressSee={() => handleModalOpen("see")}
+            onPressEdit={() => handleModalOpen("edit")}
+            onPressDelete={() => {}}
           />
         )}
       />
