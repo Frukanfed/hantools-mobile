@@ -1,21 +1,16 @@
+import { Customer } from "@/constants/Types";
 import { FontAwesome } from "@expo/vector-icons";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 
 interface Props {
-  name: string;
-  phone: string;
-  city: string;
-  district: string;
+  customer: Customer;
   onPressSee: () => void;
   onPressEdit: () => void;
   onPressDelete: () => void;
 }
 
 export default function CustomerCard({
-  name,
-  phone,
-  city,
-  district,
+  customer,
   onPressSee,
   onPressEdit,
   onPressDelete,
@@ -23,10 +18,10 @@ export default function CustomerCard({
   return (
     <View style={styles.Card}>
       <View>
-        <Text style={styles.Name}>{name}</Text>
-        <Text>{phone}</Text>
+        <Text style={styles.Name}>{customer.name}</Text>
+        <Text>{customer.phone}</Text>
         <Text>
-          {city} / {district}
+          {customer.city} / {customer.district}
         </Text>
       </View>
       <View style={{ flexDirection: "row", paddingTop: 10 }}>

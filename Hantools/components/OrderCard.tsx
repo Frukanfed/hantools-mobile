@@ -1,38 +1,27 @@
+import { Order } from "@/constants/Types";
 import { FontAwesome } from "@expo/vector-icons";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 
 interface Props {
-  date: string;
-  seller: string;
-  payment_method: string;
-  products: string;
-  cost: number;
-  status: string;
+  order: Order;
   onPressSee: () => void;
   onPressDelete: () => void;
 }
 
-export default function OrderCard({
-  date,
-  seller,
-  payment_method,
-  products,
-  cost,
-  status,
-  onPressSee,
-  onPressDelete,
-}: Props) {
+export default function OrderCard({ order, onPressSee, onPressDelete }: Props) {
   return (
     <View style={styles.Card}>
       <View>
-        <Text style={styles.Date}>{date}</Text>
-        <Text style={styles.Seller}>{seller}</Text>
-        <Text style={styles.Status}>{status}</Text>
+        <Text style={styles.Date}>{order.date}</Text>
+        <Text style={styles.Seller}>{order.seller}</Text>
+        <Text style={styles.Status}>{order.status}</Text>
       </View>
       <View style={styles.Details}>
-        <Text style={styles.InfoText}>Ödeme Yöntemi: {payment_method}</Text>
-        <Text style={{ fontSize: 12, maxWidth: 150 }}>{products}</Text>
-        <Text style={styles.InfoText}>Tutar: {cost.toFixed(2)} TL</Text>
+        <Text style={styles.InfoText}>
+          Ödeme Yöntemi: {order.payment_method}
+        </Text>
+        <Text style={{ fontSize: 12, maxWidth: 150 }}>{order.products}</Text>
+        <Text style={styles.InfoText}>Tutar: {order.cost.toFixed(2)} TL</Text>
       </View>
       <View style={{ flexDirection: "row", paddingTop: 10 }}>
         <Pressable onPress={onPressSee}>

@@ -95,10 +95,7 @@ export default function Dealers() {
         keyExtractor={(item) => String(item.id)}
         renderItem={({ item }) => (
           <DealerCard
-            first_name={item.first_name}
-            last_name={item.last_name}
-            username={item.username}
-            phone={String(item.phone)}
+            dealer={item}
             onPressEdit={() => handleModalOpen("edit", item)}
             onPressDelete={() => handleDeleteDealer(item.id)}
           />

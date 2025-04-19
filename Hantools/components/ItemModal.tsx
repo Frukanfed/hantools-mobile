@@ -272,7 +272,7 @@ const styles = StyleSheet.create({
   Container: {
     backgroundColor: "white",
     width: "95%",
-    maxHeight: 430,
+    maxHeight: 500,
     borderRadius: 5,
     paddingBottom: 10,
   },
@@ -316,13 +316,13 @@ const styles = StyleSheet.create({
   },
   CheckboxContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
     marginTop: 10,
   },
   Checkbox: {
     flexDirection: "row",
     alignItems: "center",
-    padding: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 5,
     borderRadius: 5,
     marginHorizontal: 5,
     justifyContent: "center",
@@ -333,12 +333,12 @@ const styles = StyleSheet.create({
 
   Checked: {
     fontSize: 16,
-    color: "white",
+    color: "black",
     marginLeft: 5,
     borderWidth: 1,
   },
   Button: {
-    marginTop: 10,
+    marginVertical: 10,
     marginHorizontal: 30,
   },
   Text: {

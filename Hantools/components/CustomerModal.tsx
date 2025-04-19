@@ -196,7 +196,6 @@ const styles = StyleSheet.create({
   Container: {
     backgroundColor: "white",
     width: "95%",
-    height: 500,
     borderRadius: 5,
   },
   HeaderContainer: {
@@ -241,7 +240,7 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
   },
   Button: {
-    marginTop: 10,
+    marginVertical: 10,
     marginHorizontal: 30,
   },
   Text: {

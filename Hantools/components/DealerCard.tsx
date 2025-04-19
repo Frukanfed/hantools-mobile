@@ -1,20 +1,15 @@
+import { Dealer } from "@/constants/Types";
 import { FontAwesome } from "@expo/vector-icons";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 
 interface Props {
-  first_name: string;
-  last_name: string;
-  username: string;
-  phone: string;
+  dealer: Dealer;
   onPressEdit: () => void;
   onPressDelete: () => void;
 }
 
 export default function DealerCard({
-  first_name,
-  last_name,
-  username,
-  phone,
+  dealer,
   onPressEdit,
   onPressDelete,
 }: Props) {
@@ -22,10 +17,10 @@ export default function DealerCard({
     <View style={styles.card}>
       <View>
         <Text style={styles.name}>
-          {first_name} {last_name}
+          {dealer.first_name} {dealer.last_name}
         </Text>
-        <Text style={styles.username}>{username}</Text>
-        <Text style={styles.phone}>{phone}</Text>
+        <Text style={styles.username}>{dealer.username}</Text>
+        <Text style={styles.phone}>{dealer.phone}</Text>
       </View>
       <View style={styles.iconContainer}>
         <Pressable onPress={onPressEdit}>

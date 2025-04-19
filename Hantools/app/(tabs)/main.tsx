@@ -101,10 +101,7 @@ export default function Main() {
         keyExtractor={(item) => String(item.id)}
         renderItem={({ item }) => (
           <CustomerCard
-            name={item.name}
-            phone={String(item.phone)}
-            city={item.city}
-            district={item.district}
+            customer={item}
             onPressSee={() => handleModalOpen("see", item)}
             onPressEdit={() => handleModalOpen("edit", item)}
             onPressDelete={() => handleDeleteCustomer(item.id)}

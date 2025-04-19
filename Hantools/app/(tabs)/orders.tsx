@@ -105,12 +105,7 @@ export default function Orders() {
         keyExtractor={(item) => String(item.id)}
         renderItem={({ item }) => (
           <OrderCard
-            date={item.date}
-            seller={item.seller}
-            payment_method={item.payment_method}
-            products={item.products}
-            cost={item.cost}
-            status={item.status}
+            order={item}
             onPressSee={() => handleModalOpen("see", item)}
             onPressDelete={() => handleDeleteDealer(item.id)}
           />
