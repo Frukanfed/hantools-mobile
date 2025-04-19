@@ -31,23 +31,41 @@ export default function Header() {
           source={require("../assets/images/mainlogo.png")}
         />
       </View>
-      {isAdmin && (
-        // TODO: ROUTER
-        <Pressable
-          onPress={() => {
-            router.navigate("/adminPanel");
-          }}
-        >
+      <View style={{ flexDirection: "row" }}>
+        <Pressable>
           {({ pressed }) => (
             <FontAwesome
               size={25}
-              name="shield"
-              style={[styles.AdminPanelButton, { opacity: pressed ? 0.5 : 1 }]}
+              name="bell"
+              style={[
+                styles.AdminPanelButton,
+                { opacity: pressed ? 0.5 : 1, paddingRight: 10 },
+              ]}
               color={"gray"}
             />
           )}
         </Pressable>
-      )}
+        {isAdmin && (
+          // TODO: ROUTER
+          <Pressable
+            onPress={() => {
+              router.navigate("/adminPanel");
+            }}
+          >
+            {({ pressed }) => (
+              <FontAwesome
+                size={25}
+                name="shield"
+                style={[
+                  styles.AdminPanelButton,
+                  { opacity: pressed ? 0.5 : 1 },
+                ]}
+                color={"gray"}
+              />
+            )}
+          </Pressable>
+        )}
+      </View>
     </View>
   );
 }
